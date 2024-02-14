@@ -1,11 +1,21 @@
 import React, { useState } from "react";
 
 const SignUp = () => {
-    const [info,setInfo]=useState({name:"",email:"",password:""})
+  const [info,setInfo]=useState({name:"",email:"",password:""})
 
-    const handleSignUp=()=>{
+    const handleSignUp= async()=>{
     console.log(info.name,info.email,info.password)
+    const result = await fetch('http://localhost:5000/signup',{
+      method:"POST",
+      body:JSON.stringify({name : info.name, email: info.email, password: info.password}),  
+       headers:{
+       'Content-Type': 'application/json'
+      }
+    });
+    const response = await(result.json()); 
+      console.log(response)
     }
+    
     
   return (
     <>
