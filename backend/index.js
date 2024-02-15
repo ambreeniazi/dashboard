@@ -26,8 +26,8 @@ mongoose.connect(process.env.MONGO_URI).then(()=>{
 //         app.listen(process.env.PORT,()=>console.log(`Server is listening port ${process.env.PORT}`))
 //     }).catch((err)=>console.log(err))
 
-    app.post('/signup', async (req ,res)=>{
-        const User = new user(req.body);        
+    app.post('/signup', async (req ,res)=>
+    {   const User = new user(req.body);        
         const result = await User.save();
         return res.status(200).send(result);
     })
