@@ -1,10 +1,20 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Swal from 'sweetalert2';
 
 const SignUp = () => {
   const [info, setInfo] = useState({ name: "", email: "", password: "" });
+  const [data, setData] = useState({});
+
   const navigate = new useNavigate();
 
+  useEffect(() =>{
+    const auth = localStorage.getItem('user');
+    if(auth){
+      navigate("/")
+    }
+   },[])
+   
 
   const handleSignUp = async () => {
     try {
@@ -29,6 +39,21 @@ const SignUp = () => {
         // Add data to localStorage
         localStorage.setItem("user", JSON.stringify(response));
         navigate("/");
+       const  toast = Swal.mixin({
+          toast: true,
+          position: "top-end",
+          showConfirmButton: false,
+          timer: 1500,
+          timerProgressBar: true,
+          didOpen: (toast) => {
+            toast.onmouseenter = Swal.stopTimer;
+            toast.onmouseleave = Swal.resumeTimer;
+          }
+        });
+        toast.fire({
+          icon: "success",
+          title: "Signed in successfully"
+        });
       // } else {
       //   alert("Error in signing up");
       // }
@@ -36,7 +61,6 @@ const SignUp = () => {
       console.error("Error during signup:", error);
     }
   };
-
   return (
     <>
       <div className="flex justify-center items-center">
